@@ -5,6 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>This is your life</title>
     <style>
+        /* 隐藏YouTube播放器 */
+        #bgMusic {
+            display: none;
+        }
+        
+        /* 取消静音按钮样式 */
+        #unmuteBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            z-index: 1000;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        #unmuteBtn:hover {
+            background: #cc0000;
+        }
         /* 全局样式 */
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -50,23 +74,35 @@
             z-index: 0;
         }
         
-<!-- 修正后的播放器 -->
-<iframe id="bgMusic"
-        width="0"
-        height="0"
-        src="https://www.youtube.com/embed/7Hlp_E9PF1o?autoplay=1&mute=1&loop=1&playlist=7Hlp_E9PF1o&enablejsapi=1&controls=0"
-        frameborder="0"
-        allow="autoplay; encrypted-media"
-        style="display:none;">
-</iframe>
+    <!-- 第一步：静音自动播放的YouTube播放器 -->
+    <iframe id="bgMusic"
+            width="0"
+            height="0"
+            src="https://www.youtube.com/embed/7Hlp_E9PF1o?autoplay=1&mute=1&loop=1&playlist=7Hlp_E9PF1o&enablejsapi=1&controls=0"
+            frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+    </iframe>
 
-<script>
-// 用户点击后取消静音
-document.addEventListener('click', () => {
-  const iframe = document.getElementById('bgMusic');
-  iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-}, { once: true });
-</script>
+    <!-- 第二步：取消静音按钮 -->
+    <button id="unmuteBtn">
+        ♫ 点击取消静音
+    </button>
+
+    <script>
+        // 用户点击按钮时取消静音
+        document.getElementById('unmuteBtn').addEventListener('click', function() {
+            const iframe = document.getElementById('bgMusic');
+            
+            // 方法1：直接修改src（最可靠）
+            iframe.src = iframe.src.replace('&mute=1', '');
+            
+            // 方法2：使用YouTube API（需要额外加载）
+            // iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+            
+            this.style.display = 'none'; // 隐藏按钮
+        });
+    </script>
         
         /* 文字内容容器 */
         .hero-content {

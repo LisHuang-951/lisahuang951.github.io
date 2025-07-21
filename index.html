@@ -6,211 +6,112 @@
     <title>This is your life</title>
     <style>
         /* 全局样式 */
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --text-color: #333;
-            --light-gray: #f5f5f5;
-            --border-color: #e0e0e0;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
             line-height: 1.6;
-            color: var(--text-color);
-            background-color: #fff;
         }
-        
-        
-        /* 标题区 - 使用图片背景 */
-.hero {
-    text-align: center;
-    padding: 100px 0;
-    background-image: url('https://images.theconversation.com/files/498174/original/file-20221130-22-qnisxd.jpeg?ixlib=rb-4.1.0&q=45&auto=format&w=1000&fit=clip');
-    background-size: cover;
-    background-position: center;
-    min-height: 60vh; /* 改用min-height确保最小高度 */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-    margin-bottom: 60px;
-}
 
-.hero h1 {
-    font-size: 3.5rem;
-    font-weight: 300;
-    margin-bottom: 20px;
-    color: white; /* 修改为白色以适应深色背景 */
-}
+        /* 视频背景容器 */
+        .hero {
+            position: relative;
+            height: 60vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
 
-.hero p {
-    font-size: 1.5rem;
-    color: rgba(255,255,255,0.9); /* 半透明白色 */
-    max-width: 600px;
-    margin: 0 auto;
-}
-        
+        /* 视频元素 */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* 半透明遮罩增强文字可读性 */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 0;
+        }
+
+        /* 文字内容容器 */
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 0 20px;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
         .hero p {
             font-size: 1.5rem;
-            color: #666;
+            color: rgba(255,255,255,0.9);
             max-width: 600px;
             margin: 0 auto;
         }
-        
-        /* 内容区块 */
-        .section {
-            margin: 80px 0;
+
+        /* 下半部分内容区 */
+        .content-section {
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
         }
-        
-        .section h2 {
-            font-size: 2rem;
-            font-weight: 300;
-            color: var(--primary-color);
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        /* 子项列表 */
-        .item-group {
-            margin: 40px 0;
-        }
-        
-        .item {
-            margin-bottom: 30px;
-        }
-        
-        .item h3 {
-            font-size: 1.4rem;
-            font-weight: 500;
-            color: var(--secondary-color);
-            margin-bottom: 10px;
-        }
-        
-        .item p {
-            margin-bottom: 15px;
-            color: #555;
-        }
-        
-        /* 按钮样式 */
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--secondary-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: 500;
-            margin: 20px 0;
-            transition: all 0.3s ease;
-        }
-        
-        .btn:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
-        }
-        
-        /* 引用区块 */
-        .quote {
-            background-color: var(--light-gray);
-            padding: 30px;
-            border-left: 4px solid var(--secondary-color);
-            margin: 30px 0;
-        }
-        
-        .quote p {
-            font-style: italic;
-            margin-bottom: 10px;
-        }
-        
-        /* 表格样式 */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 40px 0;
-            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
-        }
-        
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        th {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 500;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-        
-        /* 分隔线 */
-        .divider {
-            height: 1px;
-            background-color: var(--border-color);
-            margin: 60px 0;
-        }
-        
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1.2rem;
-            }
-            
-            .section {
-                margin: 50px 0;
-            }
+
+        .content-section h2 {
+            color: #2c3e50;
+            margin-top: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
         }
     </style>
 </head>
 <body>
-    <!-- 标题区 -->
+    <!-- 视频背景区 -->
     <section class="hero">
-        <div class="container">
+        <!-- 视频元素（自动播放、静音、循环） -->
+        <video class="video-background" autoplay muted loop playsinline>
+            <source src="https://images-assets.nasa.gov/video/GSFC_20150420_Orbit_m11858_2014/GSFC_20150420_Orbit_m11858_2014~large.mp4" type="video/mp4">
+            您的浏览器不支持视频标签
+        </video>
+        
+        <!-- 半透明遮罩 -->
+        <div class="overlay"></div>
+        
+        <!-- 文字内容 -->
+        <div class="hero-content">
             <h1>This is your life</h1>
             <p>You can make a choose for today and tomorrow.</p>
         </div>
     </section>
-    
-    <div class="container">
-   
-            <div class="item-group">
-                <h3>Science</h3>
-                
-                <div class="item">
-                    <p>How to build a personal website.</p>
-                </div>
-                
-            </div>
-        </section>
-           
-                <h3>Philosophy</h3>
-                
-                <div class="item">
-                    <p><a href="article.html" style="color: #3498db;">I've known storms.</a></p>
-                </div>
-            </div>
 
+    <!-- 下半部分内容区 -->
+    <div class="content-section">
+        <h2>Science</h2>
+        <p>How to build a personal website.</p>
+
+        <h2>Philosophy</h2>
+        <p><a href="article.html" style="color: #3498db;">I've known storms.</a></p>
     </div>
 </body>
 </html>

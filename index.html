@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>This is your life</title>
+    <script src="https://www.youtube.com/iframe_api"></script>
     <style>
         /* 隐藏YouTube播放器 */
         #bgMusic {
@@ -110,7 +111,7 @@
         }
 
     </style>
-              <script src="https://www.youtube.com/iframe_api"></script>
+
 </head>
 <body>
       <!-- 2. 静音自动播放的 YouTube iframe -->
@@ -125,7 +126,7 @@
   ></iframe>
 
   <!-- 3. 取消静音按钮 -->
-  <button id="unmuteBtn">♫ 点击取消静音</button>
+  <button id="unmuteBtn">♫ PLAY</button>
 
   <script>
     let player;
@@ -137,6 +138,7 @@
           'onReady': (event) => {
             event.target.mute(); // 初始静音
             event.target.playVideo(); // 尝试播放（可能受限）
+            console.log("YouTube 播放器已初始化！"); // 调试用
           }
         }
       });

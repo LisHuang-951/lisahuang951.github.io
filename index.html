@@ -74,36 +74,6 @@
             z-index: 0;
         }
         
-    <!-- 第一步：静音自动播放的YouTube播放器 -->
-    <iframe id="bgMusic"
-            width="0"
-            height="0"
-            src="https://www.youtube.com/embed/7Hlp_E9PF1o?autoplay=1&mute=1&loop=1&playlist=7Hlp_E9PF1o&enablejsapi=1&controls=0"
-            frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-    </iframe>
-
-    <!-- 第二步：取消静音按钮 -->
-    <button id="unmuteBtn">
-        ♫ 点击取消静音
-    </button>
-
-    <script>
-        // 用户点击按钮时取消静音
-        document.getElementById('unmuteBtn').addEventListener('click', function() {
-            const iframe = document.getElementById('bgMusic');
-            
-            // 方法1：直接修改src（最可靠）
-            iframe.src = iframe.src.replace('&mute=1', '');
-            
-            // 方法2：使用YouTube API（需要额外加载）
-            // iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-            
-            this.style.display = 'none'; // 隐藏按钮
-        });
-    </script>
-        
         /* 文字内容容器 */
         .hero-content {
             position: relative;
@@ -138,9 +108,48 @@
             border-bottom: 1px solid #eee;
             padding-bottom: 10px;
         }
+          <script src="https://www.youtube.com/iframe_api"></script>
     </style>
 </head>
 <body>
+      <!-- 静音自动播放的 YouTube iframe -->
+  <iframe id="bgMusic"
+          width="0"
+          height="0"
+          src="https://www.youtube.com/embed/7Hlp_EPF1o?autoplay=1&mute=1&loop=1&playlist=7Hlp_E9PF1o&enablejsapi=1&controls=0"
+          frameborder="0"
+          allow="autoplay"
+          allowfullscreen>
+  </iframe>
+
+  <!-- 取消静音按钮 -->
+  <button id="unmuteBtn">♫ 点击取消静音</button>
+
+  <script>
+    let player;
+
+    // 加载 YouTube 播放器
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('bgMusic', {
+        events: {
+          'onReady': (e) => {
+            // 静音自动播放（确保合规）
+            e.target.mute();
+            e.target.playVideo();
+          }
+        }
+      });
+    }
+
+    // 用户点击时取消静音
+    document.getElementById('unmuteBtn').addEventListener('click', () => {
+      if (player) {
+        player.unMute();
+        document.getElementById('unmuteBtn').style.display = 'none';
+      }
+    });
+  </script>
+    
     <!-- 视频背景区 -->
     <section class="hero">
         <!-- 视频元素（自动播放、静音、循环） -->
